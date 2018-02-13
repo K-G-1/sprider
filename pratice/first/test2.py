@@ -2,9 +2,10 @@
 #
 
 import urllib2
-from sys import argv 
+# from sys import argv 
 
-script , url = argv
+# script , url = argv
+url = 'http://www.opendv.com'
 
 request = urllib2.Request(url)
 try:
