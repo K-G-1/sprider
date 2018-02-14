@@ -72,8 +72,9 @@ class download(object):
             f.writelines(text)
             f.write('\n\n')
 
-
 # 非阻塞检测键盘输入 q+enter 返回true
+
+
 def check_input():
     import select
     if select.select([sys.stdin, ], [], [], 0.0)[0]:

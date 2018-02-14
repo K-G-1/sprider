@@ -24,8 +24,8 @@ class download(object):
         self.names = []
         self.urls = []
         self.nums = 0
-    # 爬取目录 保存章节名与章节地址
 
+    # 爬取目录 保存章节名与章节地址
     def download_urls(self):
         req = requests.get(url=self.target)
         html = req.text
@@ -37,8 +37,8 @@ class download(object):
         for each in a[12:]:
             self.names.append(each.string)
             self.urls.append(self.url + each.get('href'))
-    # 爬取章节内容
 
+    # 爬取章节内容
     def get_contents(self, target):
         req = requests.get(url=target)
         html = req.text
@@ -91,6 +91,7 @@ if __name__ == "__main__":
     print('《一年永恒》开始下载：')
     for i in range(dl.nums):
         time.sleep(1)
+
         if check_input():
             print ('break')
         else:
@@ -100,8 +101,6 @@ if __name__ == "__main__":
         sys.stdout.flush()
 
     # print('《一年永恒》下载完成')
-
-
 # if __name__ == '__main__':
 #     target = "http://www.biqukan.com/1_1094/5403177.html"
 #     req = requests.get(url = target)
