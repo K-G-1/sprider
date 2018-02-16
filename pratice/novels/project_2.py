@@ -93,7 +93,6 @@ if __name__ == "__main__":
     dl.get_url_list()
     for index in dl.index_urls:
         break_flag = False
-        print('%s'%index)
         dl.download_urls(index)
         print('《%s》开始下载：' % dl.novels_name)
         save_name = dl.novels_name + '.txt'
@@ -105,7 +104,7 @@ if __name__ == "__main__":
             else:
                 pass
             dl.writer(dl.names[i], save_name, dl.get_contents(dl.urls[i]))
-            sys.stdout.write('%s'%dl.urls[0],)
+            sys.stdout.write('%s\n'%dl.urls[0])
             sys.stdout.write("  已下载:%2.3f%%" % float(i / dl.nums * 100) + '\r')
             sys.stdout.flush()
         if break_flag:
