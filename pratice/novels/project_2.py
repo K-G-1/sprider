@@ -93,7 +93,7 @@ if __name__ == "__main__":
     dl.get_url_list()
     for index in dl.index_urls:
         break_flag = False
-        dl.download_urls(index);
+        dl.download_urls(index)
         print('《%s》开始下载：' % dl.novels_name)
         save_name = dl.novels_name + '.txt'
         # print("%s"%index)
