@@ -69,7 +69,7 @@ class download(object):
 
     # 保存章节名，章节内容
     def writer(self, name, path, text):
-        with open(path, 'w+', encoding='utf-8') as f:
+        with open(path, 'a', encoding='utf-8') as f:
             f.write(name + '\n')
             f.writelines(text)
             f.write('\n\n')
@@ -93,11 +93,10 @@ if __name__ == "__main__":
     dl.get_url_list()
     for index in dl.index_urls:
         break_flag = False
-        print('%s'%index)
-        dl.download_urls(index)
+        dl.download_urls(index);
         print('《%s》开始下载：' % dl.novels_name)
         save_name = dl.novels_name + '.txt'
-
+        # print("%s"%index)
         for i in range(dl.nums):
             break_flag = check_input()
             if(break_flag):
@@ -105,7 +104,7 @@ if __name__ == "__main__":
             else:
                 pass
             dl.writer(dl.names[i], save_name, dl.get_contents(dl.urls[i]))
-            sys.stdout.write('%s'%dl.urls[0],)
+            # sys.stdout.write('%s'%dl.urls[0])
             sys.stdout.write("  已下载:%2.3f%%" % float(i / dl.nums * 100) + '\r')
             sys.stdout.flush()
         if break_flag:
