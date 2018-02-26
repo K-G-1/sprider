@@ -28,7 +28,7 @@ class download(object):
         html = req.text
         div_bd = BeautifulSoup(html, "lxml")
         index = div_bd.find_all('div', class_='block bd')
-        name_novles = BeautifulSoup(str(index[1]), "lxml")
+        name_novles = BeautifulSoup(str(index[5]), "lxml")
         name = name_novles.find_all('a')
         self.index = len(name)
         print('排名数：', self.index, self.index_urls)
