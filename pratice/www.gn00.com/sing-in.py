@@ -5,7 +5,13 @@ from selenium.webdriver.common.keys import Keys
 # selenium中的actionchains的方法鼠标
 from selenium.webdriver.common.action_chains import ActionChains
 import time
+from pyvirtualdisplay import Display
 
+
+display = Display(visible=0, size=(800, 800))
+display.start()
+
+headers = {'User-Agent': 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
 
 # # 创建的新实例驱动
 # options = webdriver.FirefoxOptions()
@@ -16,7 +22,7 @@ import time
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(chrome_options=chrome_options)
+driver = webdriver.Chrome(chrome_options=chrome_options,headers=headers)
 # driver = webdriver.Firefox(firefox_options=options)
 driver.get("https://www.gn00.com/")
 
@@ -29,8 +35,8 @@ time.sleep(1)
 # print (driver.page_source)
 login_name = driver.find_element_by_xpath(
     '//div[@class="c cl"]/div[1]/table/tbody/tr/td/input[@name = "username"]')
-#python3 发送中文的时候要加上‘u'
-#python2 没有解决
+# python3 发送中文的时候要加上‘u'
+# python2 没有解决
 login_name.send_keys(u"顾影_")
 login_password = driver.find_element_by_xpath(
     '//div[@class="c cl"]/div[2]/table/tbody/tr/td/input[@name = "password"]')
@@ -43,14 +49,14 @@ button.click()
 
 
 #==================签到=====================#
-#延时4秒返回登录前页面
-#也可以尝试点击’返回页面‘
+# 延时4秒返回登录前页面
+# 也可以尝试点击’返回页面‘
 time.sleep(4)
-#鼠标悬停，不然隐藏元素出不来
+# 鼠标悬停，不然隐藏元素出不来
 mouse = driver.find_element_by_id('qing_user')
 ActionChains(driver).move_to_element(mouse).perform()
 
-##鼠标时间不是很准确，最好加上延时
+# 鼠标时间不是很准确，最好加上延时
 sign_in = driver.find_element_by_xpath('//div[@id="qing_user_menu"]/a[2]/font')
 print(sign_in.text)
 sign_in.click()
