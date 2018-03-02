@@ -7,23 +7,24 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 from pyvirtualdisplay import Display
 
-
+print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
 display = Display(visible=0, size=(800, 800))
 display.start()
 
-headers = {'User-Agent': 'User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
 
-# # 创建的新实例驱动
-# options = webdriver.FirefoxOptions()
-# #火狐无头模式
-# options.add_argument('--headless')
-# options.add_argument('--disable-gpu')
 
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
-driver = webdriver.Chrome(chrome_options=chrome_options,headers=headers)
-# driver = webdriver.Firefox(firefox_options=options)
+# 创建的新实例驱动
+options = webdriver.FirefoxOptions()
+#火狐无头模式
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
+
+# chrome_options = Options()
+# chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--disable-gpu')
+# options.add_argument('user-agent="User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36"')
+# driver = webdriver.Chrome(chrome_options=chrome_options)
+driver = webdriver.Firefox(firefox_options=options)
 driver.get("https://www.gn00.com/")
 
 #==================登录=======================#
@@ -48,27 +49,31 @@ button = driver.find_element_by_xpath(
 button.click()
 
 
-#==================签到=====================#
-# 延时4秒返回登录前页面
-# 也可以尝试点击’返回页面‘
-time.sleep(4)
-# 鼠标悬停，不然隐藏元素出不来
-mouse = driver.find_element_by_id('qing_user')
-ActionChains(driver).move_to_element(mouse).perform()
+try:
+    #==================签到=====================#
+    #延时4秒返回登录前页面
+    #也可以尝试点击’返回页面‘
+    time.sleep(4)
+    #鼠标悬停，不然隐藏元素出不来
+    mouse = driver.find_element_by_id('qing_user')
+    ActionChains(driver).move_to_element(mouse).perform()
 
-# 鼠标时间不是很准确，最好加上延时
-sign_in = driver.find_element_by_xpath('//div[@id="qing_user_menu"]/a[2]/font')
-print(sign_in.text)
-sign_in.click()
-time.sleep(1)
+    ##鼠标时间不是很准确，最好加上延时
+    sign_in = driver.find_element_by_xpath('//div[@id="qing_user_menu"]/a[2]/font')
+    # print(sign_in.text)
+    sign_in.click()
+    time.sleep(1)
 
-string_text = driver.find_element_by_xpath('//li[@id="kx"]')
-string_text.click()
+    string_text = driver.find_element_by_xpath('//li[@id="kx"]')
+    string_text.click()
 
-sign_button = driver.find_element_by_xpath('//button[@class="pn pnc"]')
-print(sign_button.text)
-sign_button.click()
-
-#=======================================#
-time.sleep(5)
-driver.close()
+    sign_button = driver.find_element_by_xpath('//button[@class="pn pnc"]')
+    # print(sign_button.text)
+    sign_button.click()
+    print("签到成功\r")
+except:
+    print ("签到失败\r")
+finally:
+    #=======================================#
+    time.sleep(5)
+    driver.close()

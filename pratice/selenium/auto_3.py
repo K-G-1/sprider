@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # coding:utf-8
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -13,9 +14,11 @@ import time
 # options.add_argument('--headless')
 # options.add_argument('--disable-gpu')
 
+print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
+
 chrome_options = Options()
-# chrome_options.add_argument('--headless')
-# chrome_options.add_argument('--disable-gpu')
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--disable-gpu')
 driver = webdriver.Chrome(chrome_options=chrome_options)
 # driver = webdriver.Firefox(firefox_options=options)
 driver.get("https://www.gn00.com/")
@@ -41,28 +44,32 @@ button = driver.find_element_by_xpath(
 # print(buttun.text)
 button.click()
 
+try:
+    #==================签到=====================#
+    #延时4秒返回登录前页面
+    #也可以尝试点击’返回页面‘
+    time.sleep(4)
+    #鼠标悬停，不然隐藏元素出不来
+    mouse = driver.find_element_by_id('qing_user')
+    ActionChains(driver).move_to_element(mouse).perform()
 
-#==================签到=====================#
-#延时4秒返回登录前页面
-#也可以尝试点击’返回页面‘
-time.sleep(4)
-#鼠标悬停，不然隐藏元素出不来
-mouse = driver.find_element_by_id('qing_user')
-ActionChains(driver).move_to_element(mouse).perform()
+    ##鼠标时间不是很准确，最好加上延时
+    sign_in = driver.find_element_by_xpath('//div[@id="qing_user_menu"]/a[2]/font')
+    # print(sign_in.text)
+    sign_in.click()
+    time.sleep(1)
 
-##鼠标时间不是很准确，最好加上延时
-sign_in = driver.find_element_by_xpath('//div[@id="qing_user_menu"]/a[2]/font')
-print(sign_in.text)
-sign_in.click()
-time.sleep(1)
+    string_text = driver.find_element_by_xpath('//li[@id="kx"]')
+    string_text.click()
 
-string_text = driver.find_element_by_xpath('//li[@id="kx"]')
-string_text.click()
-
-sign_button = driver.find_element_by_xpath('//button[@class="pn pnc"]')
-print(sign_button.text)
-sign_button.click()
-
-#=======================================#
-time.sleep(5)
-driver.close()
+    sign_button = driver.find_element_by_xpath('//button[@class="pn pnc"]')
+    # print(sign_button.text)
+    sign_button.click()
+    print("签到成功")
+except:
+    print ("签到失败")
+finally:
+    #=======================================#
+    time.sleep(5)
+    driver.close()
+    
