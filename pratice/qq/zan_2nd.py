@@ -123,6 +123,7 @@ if __name__ == '__main__':
                         zan = driver.find_element_by_xpath(
                             '//body/div[4]/div[3]/div[1]/div[1]/div[1]/div[1]/div[3]/div[2]/div/div/ul/li[1]/div[3]/div[1]/p/a[3]/i')
                         zan.click()
+                        print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
                         print(current_time)
                         print(current_name)
                         print('click ok ')

@@ -21,7 +21,7 @@ log_file = open('zan.txt','w+')
 log_file.write('test')
 
 def login_in(login_url,driver):
-    
+    time.sleep(3)
     login_windows = driver.find_element_by_id('switcher_plogin')
     login_windows.click()
 
@@ -36,11 +36,13 @@ def login_in(login_url,driver):
     time.sleep(1)
     submit = driver.find_element_by_id('login_button')
     submit.click()
-    time.sleep(1)
-    print(driver.current_url)
-    if driver.current_url is login_url:
+    time.sleep(5)
+    print((driver.current_url))
+    if str(driver.current_url) == my_space:
+        print("False")
         return False
     else :
+        print("True")
         return True
     
 
@@ -57,13 +59,13 @@ def get_space():
         except:
             print('2nd click error')    
     print(driver.current_url)
-
+my_space = 'https://user.qzone.qq.com/2060713822'
 login_url = 'https://xui.ptlogin2.qq.com/cgi-bin/xlogin?proxy_url=https%3A//qzs.qq.com/qzone/v6/portal/proxy.html&daid=5&&hide_title_bar=1&low_login=0&qlogin_auto_login=1&no_verifyimg=1&link_target=blank&appid=549000912&style=22&target=self&s_url=https%3A%2F%2Fqzs.qq.com%2Fqzone%2Fv5%2Floginsucc.html%3Fpara%3Dizone&pt_qr_app=手机QQ空间&pt_qr_link=https%3A//z.qzone.com/download.html&self_regurl=https%3A//qzs.qq.com/qzone/v6/reg/index.html&pt_qr_help_link=https%3A//z.qzone.com/download.html&pt_no_auth=0'
 # 创建的新实例驱动
 options = webdriver.FirefoxOptions()
 # 火狐无头模式
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
+# options.add_argument('--headless')
+# options.add_argument('--disable-gpu')
 driver = webdriver.Firefox(firefox_options=options)
 driver.get(login_url)
 driver.implicitly_wait(30)
@@ -106,12 +108,24 @@ time.sleep(3)
 #     page_get = input("login in ?")
 
 
-
+def get_name():
+    try:
+        
+        name = driver.find_element_by_xpath(
+            "//body/div[4]/div[3]/div[1]/div[1]/div[1]/div[1]/div[3]/div[2]/div/div/ul/li[1]/div[1]/div[4]/div[1]/a")
+        print(name.text)
+        
+    except:
+        login_in()
+        return False
+        
 #============================================#
 if __name__ == '__main__':
-    while not login_in(login_url,driver) :
+
+    while login_in(login_url,driver):
         print("refresh")
         driver.refresh()
+    print('over')
     # get_space()
     # import time
     # faild_times = 0
