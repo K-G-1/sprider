@@ -21,8 +21,7 @@ log_file = open('zan.txt','w+')
 log_file.write('test')
 
 def login_in(login_url,driver):
-    driver.get(login_url)
-    time.sleep(3)
+    
     login_windows = driver.find_element_by_id('switcher_plogin')
     login_windows.click()
 
@@ -39,6 +38,11 @@ def login_in(login_url,driver):
     submit.click()
     time.sleep(1)
     print(driver.current_url)
+    if driver.current_url is login_url:
+        return False
+    else :
+        return True
+    
 
 def get_space():
     try:
@@ -58,11 +62,13 @@ login_url = 'https://xui.ptlogin2.qq.com/cgi-bin/xlogin?proxy_url=https%3A//qzs.
 # 创建的新实例驱动
 options = webdriver.FirefoxOptions()
 # 火狐无头模式
-# options.add_argument('--headless')
-# options.add_argument('--disable-gpu')
+options.add_argument('--headless')
+options.add_argument('--disable-gpu')
 driver = webdriver.Firefox(firefox_options=options)
 driver.get(login_url)
 driver.implicitly_wait(30)
+driver.get(login_url)
+time.sleep(3)
 #==================登录=======================#
 # time.sleep(3)
 # login_windows = driver.find_element_by_id('switcher_plogin')
@@ -103,8 +109,10 @@ driver.implicitly_wait(30)
 
 #============================================#
 if __name__ == '__main__':
-    login_in(login_url,driver)
-    get_space()
+    while not login_in(login_url,driver) :
+        print("refresh")
+        driver.refresh()
+    # get_space()
     # import time
     # faild_times = 0
     # old_name = '1'
