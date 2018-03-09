@@ -1,7 +1,12 @@
+#!/usr/bin/python
+#coding:utf-8
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import json
 import time
+
+
+current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
 chrome_options = Options()
 chrome_options.add_argument('--headless')
@@ -27,20 +32,31 @@ for cookie in listCookies:
 try:
     browser.get("http://www.openedv.com/")
 
-    sign_in_button = browser.find_element_by_id('dcsignin_tips')
-    sign_in_button.click()
+    try:
+        space = browser.find_element_by_xpath('//strong[@class="vwmy"]/a')
+        print(space.text)
+        can_contiue = True
+    except:
+        can_contiue = False
+        print(current_time + " 未登录成功\r")
+    if can_contiue is True:
+        sign_in_button = browser.find_element_by_id('dcsignin_tips')
+        sign_in_button.click()
 
-    sign_text = browser.find_element_by_id('emot_1')
-    sign_text.click()
+        sign_text = browser.find_element_by_id('emot_1')
+        sign_text.click()
 except:
-    print("未登录成功/以签到")
-try:
-    check_button = browser.find_element_by_xpath('//p[@class="o pns"]/button[@class="pn pnc"]')
-    check_button.click()
-    print (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()))
-    print("ok\r")
-except:
-    print("error")
+    can_contiue = False
+    print(current_time+' 已签到\r')
+
+if can_contiue is True:
+    try:
+        check_button = browser.find_element_by_xpath('//p[@class="o pns"]/button[@class="pn pnc"]')
+        check_button.click()
+        
+        print(current_time + " 签到成功\r")
+    except:
+        print(current_time + " 签到失败\r")
 #必须要有延时不然不能签到成功
 time.sleep(5)
 browser.close()
